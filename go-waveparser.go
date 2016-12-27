@@ -1,5 +1,9 @@
 package waveparser
 
+import (
+	"io"
+)
+
 type WaveHeader struct {
 	chunk_id        int
 	chunk_size      int
@@ -16,7 +20,23 @@ type WaveHeader struct {
 	sub_chunk2_size int
 }
 
-func New() *WaveHeader {
-	header := &WaveHeader{}
+type WaveParser struct {
+	header WaveHeader
+}
+
+func New(r io.Reader) *WaveParser {
+	header := &WaveParser{}
 	return header
+}
+
+func (parser *WaveParser) Parse() {
+	
+}
+
+func (parser *WaveParser) GetHeader() *WaveHeader {
+	return &parser.header
+}
+
+func (header *WaveHeader) GetChunkId() int {
+	return header.chunk_id
 }
