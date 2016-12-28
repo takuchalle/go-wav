@@ -2,26 +2,29 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"log"
 	"github.com/takuyaohashi/go-waveparser"
+	"log"
+	"os"
 )
 
 func usage() {
-	fmt.Printf("Usage: go-waveparser [wave file name]\n");
-	os.Exit(1)
+	log.Fatal("Usage: go-waveparser [wave file name]")
 }
 
 func main() {
-	if(len(os.Args) != 2) { usage() }
-	
-	f, err := os.Open(os.Args[1]) // For read access.
+	if len(os.Args) != 2 {
+		usage()
+	}
+
+	f, err := os.Open(os.Args[1])
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+	defer f.Close()
+
 	parser := waveparser.New(f)
 	parser.Parse()
 	header := parser.GetHeader()
-	fmt.Printf("chunk_id = %d\n", header.GetChunkId());
+	fmt.Printf("chunk_id = %d\n", header.GetChunkId())
 }
+
