@@ -27,4 +27,3 @@ func main() {
 	header := parser.GetHeader()
 	fmt.Printf("chunk_id = %d\n", header.GetChunkId())
 }
-

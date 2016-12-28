@@ -1,9 +1,9 @@
 package waveparser
 
 import (
+	"fmt"
 	"io"
 	"log"
-	"fmt"
 )
 
 type WaveHeader struct {
@@ -34,12 +34,12 @@ func New(r io.Reader) *WaveParser {
 }
 
 func (parser *WaveParser) Parse() {
-	buffer := make([]byte , 100)
+	buffer := make([]byte, 100)
 	_, err := io.ReadAtLeast(parser.reader, buffer, 100)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%v\n",buffer)
+	fmt.Printf("%v\n", buffer)
 }
 
 func (parser *WaveParser) GetHeader() *WaveHeader {
@@ -53,4 +53,3 @@ func (header *WaveHeader) GetChunkId() int {
 func (header *WaveHeader) GetChunkSize() int {
 	return header.chunk_size
 }
-
