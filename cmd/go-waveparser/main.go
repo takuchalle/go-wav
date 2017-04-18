@@ -35,4 +35,3 @@ func main() {
 	fmt.Printf("Bit Per Sample \t= %d\n", header.GetBitPerSample())
 	fmt.Printf("Data Size \t= %d\n", header.GetSubChunk2Size())
 }
-

@@ -1,9 +1,9 @@
 package waveparser
 
 import (
+	"encoding/binary"
 	"io"
 	"log"
-	"encoding/binary"
 )
 
 const HEADER_SIZE = 44
@@ -80,7 +80,7 @@ func (parser *WaveParser) ReadFmtSubChunk(buffer []byte) []byte {
 
 	parser.header.bits_per_sample = binary.LittleEndian.Uint16(buffer[:2])
 	buffer = buffer[2:]
-	
+
 	return buffer
 }
 
@@ -91,7 +91,7 @@ func (parser *WaveParser) ReadDataSubChunk(buffer []byte) []byte {
 
 	parser.header.sub_chunk2_size = binary.LittleEndian.Uint32(buffer[:4])
 	buffer = buffer[4:]
-	
+
 	return buffer
 }
 
@@ -162,4 +162,3 @@ func (header *WaveHeader) GetSubChunk2Id() string {
 func (header *WaveHeader) GetSubChunk2Size() uint32 {
 	return header.sub_chunk2_size
 }
-
