@@ -11,6 +11,10 @@ WAVE Header Parser written in Golang
 # go get -u github.com/takuyaohashi/go-waveparser/cmd/go-waveparser
 ```
 
+# Reference
+
+[Wave File Format](http://soundfile.sapp.org/doc/WaveFormat/)
+
 # Author
 
 [takuyachallenge](https://twitter.com/takuyachallenge)
