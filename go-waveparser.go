@@ -2,6 +2,7 @@ package waveparser
 
 import (
 	"encoding/binary"
+	"errors"
 	"io"
 	"log"
 )
@@ -26,7 +27,7 @@ type WaveHeader struct {
 	SubChunk2Size uint32
 }
 
-// WaveParser is 
+// WaveParser is
 type WaveParser struct {
 	header WaveHeader
 	reader io.Reader
@@ -39,9 +40,9 @@ func New(r io.Reader) *WaveParser {
 	return parser
 }
 
-func (parser *WaveParser) readRiffChunk(buffer []byte) []byte {
+func (parser *WaveParser) readRiffChunk(buffer []byte) ([]byte, error) {
 	if "RIFF" != string(buffer[:4]) {
-		log.Fatal("This is not WAVE file!\n")
+		return buffer , errors.New("This is not wav file")
 	}
 	parser.header.ChunkID = string(buffer[:4])
 	buffer = buffer[4:]
@@ -54,12 +55,12 @@ func (parser *WaveParser) readRiffChunk(buffer []byte) []byte {
 	}
 	parser.header.Format = string(buffer[:4])
 	buffer = buffer[4:]
-	return buffer
+	return buffer ,nil
 }
 
-func (parser *WaveParser) readFmtSubChunk(buffer []byte) []byte {
+func (parser *WaveParser) readFmtSubChunk(buffer []byte) ([]byte, error) {
 	if "fmt " != string(buffer[:4]) {
-		log.Fatal("This is not WAVE file!\n")
+		return buffer, errors.New("This is not wav file")
 	}
 	parser.header.SubChunkID = string(buffer[:4])
 	buffer = buffer[4:]
@@ -85,7 +86,7 @@ func (parser *WaveParser) readFmtSubChunk(buffer []byte) []byte {
 	parser.header.BitsPerSample = binary.LittleEndian.Uint16(buffer[:2])
 	buffer = buffer[2:]
 
-	return buffer
+	return buffer, nil
 }
 
 func (parser *WaveParser) readDataSubChunk(buffer []byte) []byte {
@@ -99,16 +100,24 @@ func (parser *WaveParser) readDataSubChunk(buffer []byte) []byte {
 	return buffer
 }
 
-func (parser *WaveParser) Parse() {
+func (parser *WaveParser) Parse() error {
 	buffer := make([]byte, HeaderSize)
 	_, err := io.ReadAtLeast(parser.reader, buffer, HeaderSize)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
-	buffer = parser.readRiffChunk(buffer)
-	buffer = parser.readFmtSubChunk(buffer)
+	buffer, err = parser.readRiffChunk(buffer)
+	if err != nil {
+		return err
+	}
+	buffer, err = parser.readFmtSubChunk(buffer)
+	if err != nil {
+		return err
+	}
 	buffer = parser.readDataSubChunk(buffer)
+
+	return nil
 }
 
 func (parser *WaveParser) GetHeader() *WaveHeader {
