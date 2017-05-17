@@ -6,43 +6,47 @@ import (
 	"log"
 )
 
-const HEADER_SIZE = 44
+// HeaderSize is Wav Header Size
+const HeaderSize = 44
 
+// WaveHeader is wave header
 type WaveHeader struct {
-	chunk_id        string
-	chunk_size      uint32
-	format          string
-	sub_chunk_id    string
-	sub_chunk_size  uint32
-	audio_format    uint16
-	num_channels    uint16
-	sample_rate     uint32
-	byte_rate       uint32
-	block_align     uint16
-	bits_per_sample uint16
-	sub_chunk2_id   string
-	sub_chunk2_size uint32
+	chunkID       string
+	chunkSize     uint32
+	format        string
+	subChunkID    string
+	subChunkSize  uint32
+	audioFormat   uint16
+	numChannels   uint16
+	sampleRate    uint32
+	byteRate      uint32
+	blockAlign    uint16
+	bitsPerSample uint16
+	subChunk2ID   string
+	subChunk2Size uint32
 }
 
+// WaveParser is 
 type WaveParser struct {
 	header WaveHeader
 	reader io.Reader
 }
 
+// New creats Wave Parser
 func New(r io.Reader) *WaveParser {
 	parser := &WaveParser{}
 	parser.reader = r
 	return parser
 }
 
-func (parser *WaveParser) ReadRiffChunk(buffer []byte) []byte {
+func (parser *WaveParser) readRiffChunk(buffer []byte) []byte {
 	if "RIFF" != string(buffer[:4]) {
 		log.Fatal("This is not WAVE file!\n")
 	}
-	parser.header.chunk_id = string(buffer[:4])
+	parser.header.chunkID = string(buffer[:4])
 	buffer = buffer[4:]
 
-	parser.header.chunk_size = binary.LittleEndian.Uint32(buffer[:4])
+	parser.header.chunkSize = binary.LittleEndian.Uint32(buffer[:4])
 	buffer = buffer[4:]
 
 	if "WAVE" != string(buffer[:4]) {
@@ -53,112 +57,112 @@ func (parser *WaveParser) ReadRiffChunk(buffer []byte) []byte {
 	return buffer
 }
 
-func (parser *WaveParser) ReadFmtSubChunk(buffer []byte) []byte {
+func (parser *WaveParser) readFmtSubChunk(buffer []byte) []byte {
 	if "fmt " != string(buffer[:4]) {
 		log.Fatal("This is not WAVE file!\n")
 	}
-	parser.header.sub_chunk_id = string(buffer[:4])
+	parser.header.subChunkID = string(buffer[:4])
 	buffer = buffer[4:]
 
-	parser.header.sub_chunk_size = binary.LittleEndian.Uint32(buffer[:4])
+	parser.header.subChunkSize = binary.LittleEndian.Uint32(buffer[:4])
 	buffer = buffer[4:]
 
-	parser.header.audio_format = binary.LittleEndian.Uint16(buffer[:2])
+	parser.header.audioFormat = binary.LittleEndian.Uint16(buffer[:2])
 	buffer = buffer[2:]
 
-	parser.header.num_channels = binary.LittleEndian.Uint16(buffer[:2])
+	parser.header.numChannels = binary.LittleEndian.Uint16(buffer[:2])
 	buffer = buffer[2:]
 
-	parser.header.sample_rate = binary.LittleEndian.Uint32(buffer[:4])
+	parser.header.sampleRate = binary.LittleEndian.Uint32(buffer[:4])
 	buffer = buffer[4:]
 
-	parser.header.byte_rate = binary.LittleEndian.Uint32(buffer[:4])
+	parser.header.byteRate = binary.LittleEndian.Uint32(buffer[:4])
 	buffer = buffer[4:]
 
-	parser.header.block_align = binary.LittleEndian.Uint16(buffer[:2])
+	parser.header.blockAlign = binary.LittleEndian.Uint16(buffer[:2])
 	buffer = buffer[2:]
 
-	parser.header.bits_per_sample = binary.LittleEndian.Uint16(buffer[:2])
+	parser.header.bitsPerSample = binary.LittleEndian.Uint16(buffer[:2])
 	buffer = buffer[2:]
 
 	return buffer
 }
 
-func (parser *WaveParser) ReadDataSubChunk(buffer []byte) []byte {
+func (parser *WaveParser) readDataSubChunk(buffer []byte) []byte {
 
-	parser.header.sub_chunk2_id = string(buffer[:4])
+	parser.header.subChunk2ID = string(buffer[:4])
 	buffer = buffer[4:]
 
-	parser.header.sub_chunk2_size = binary.LittleEndian.Uint32(buffer[:4])
+	parser.header.subChunk2Size = binary.LittleEndian.Uint32(buffer[:4])
 	buffer = buffer[4:]
 
 	return buffer
 }
 
 func (parser *WaveParser) Parse() {
-	buffer := make([]byte, HEADER_SIZE)
-	_, err := io.ReadAtLeast(parser.reader, buffer, HEADER_SIZE)
+	buffer := make([]byte, HeaderSize)
+	_, err := io.ReadAtLeast(parser.reader, buffer, HeaderSize)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	buffer = parser.ReadRiffChunk(buffer)
-	buffer = parser.ReadFmtSubChunk(buffer)
-	buffer = parser.ReadDataSubChunk(buffer)
+	buffer = parser.readRiffChunk(buffer)
+	buffer = parser.readFmtSubChunk(buffer)
+	buffer = parser.readDataSubChunk(buffer)
 }
 
 func (parser *WaveParser) GetHeader() *WaveHeader {
 	return &parser.header
 }
 
-func (header *WaveHeader) GetChunkId() string {
-	return header.chunk_id
+func (header *WaveHeader) GetChunkID() string {
+	return header.chunkID
 }
 
 func (header *WaveHeader) GetChunkSize() uint32 {
-	return header.chunk_size
+	return header.chunkSize
 }
 
 func (header *WaveHeader) GetFormat() string {
 	return header.format
 }
 
-func (header *WaveHeader) GetSubChunkId() string {
-	return header.sub_chunk_id
+func (header *WaveHeader) GetSubChunkID() string {
+	return header.subChunkID
 }
 
 func (header *WaveHeader) GetSubChunkSize() uint32 {
-	return header.sub_chunk_size
+	return header.subChunkSize
 }
 
 func (header *WaveHeader) GetAudioFormat() uint16 {
-	return header.audio_format
+	return header.audioFormat
 }
 
 func (header *WaveHeader) GetNumChannels() uint16 {
-	return header.num_channels
+	return header.numChannels
 }
 
 func (header *WaveHeader) GetSampleRate() uint32 {
-	return header.sample_rate
+	return header.sampleRate
 }
 
 func (header *WaveHeader) GetByteRate() uint32 {
-	return header.byte_rate
+	return header.byteRate
 }
 
 func (header *WaveHeader) GetBlockAlign() uint16 {
-	return header.block_align
+	return header.blockAlign
 }
 
 func (header *WaveHeader) GetBitPerSample() uint16 {
-	return header.bits_per_sample
+	return header.bitsPerSample
 }
 
 func (header *WaveHeader) GetSubChunk2Id() string {
-	return header.sub_chunk2_id
+	return header.subChunk2ID
 }
 
 func (header *WaveHeader) GetSubChunk2Size() uint32 {
-	return header.sub_chunk2_size
+	return header.subChunk2Size
 }
