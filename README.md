@@ -1,15 +1,9 @@
-go-waveparser - WAVE file parser written in golang
+go-wav - wav package
 ===
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
 # About
-WAVE Header Parser written in Golang
-
-# How To Install
-
-```
-# go get -u github.com/takuyaohashi/go-waveparser/cmd/go-waveparser
-```
+go-wav is easy way to use wav file package for the Go programming language. 
 
 # Reference
 
