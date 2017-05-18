@@ -42,7 +42,7 @@ func New(r io.Reader) *Wav {
 
 func (parser *Wav) readRiffChunk(buffer []byte) ([]byte, error) {
 	if "RIFF" != string(buffer[:4]) {
-		return buffer , errors.New("This is not wav file")
+		return buffer, errors.New("This is not wav file")
 	}
 	parser.header.ChunkID = string(buffer[:4])
 	buffer = buffer[4:]
@@ -55,7 +55,7 @@ func (parser *Wav) readRiffChunk(buffer []byte) ([]byte, error) {
 	}
 	parser.header.Format = string(buffer[:4])
 	buffer = buffer[4:]
-	return buffer ,nil
+	return buffer, nil
 }
 
 func (parser *Wav) readFmtSubChunk(buffer []byte) ([]byte, error) {
