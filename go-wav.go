@@ -33,8 +33,8 @@ type Wav struct {
 	reader io.Reader
 }
 
-// New creats Wave Parser
-func New(r io.Reader) *Wav {
+// NewWav creats Wave Parser
+func NewWav(r io.Reader) *Wav {
 	parser := &Wav{}
 	parser.reader = r
 	return parser

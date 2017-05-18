@@ -22,7 +22,7 @@ func main() {
 	}
 	defer f.Close()
 
-	parser := wav.New(f)
+	parser := wav.NewWav(f)
 	parser.Parse()
 	header := parser.GetHeader()
 	fmt.Printf("Format \t\t= %s\n", header.Format)

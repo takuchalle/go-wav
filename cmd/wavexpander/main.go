@@ -25,7 +25,7 @@ func main() {
 	}
 	defer f.Close()
 
-	parser := wav.New(f)
+	parser := wav.NewWav(f)
 	err = parser.Parse()
 	if err != nil {
 		log.Fatal(err)
