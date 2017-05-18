@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/takuyaohashi/go-waveparser"
+	"github.com/takuyaohashi/go-wav"
 	"log"
 	"os"
 )
@@ -22,7 +22,7 @@ func main() {
 	}
 	defer f.Close()
 
-	parser := waveparser.New(f)
+	parser := wav.New(f)
 	parser.Parse()
 	header := parser.GetHeader()
 	fmt.Printf("Format \t\t= %s\n", header.Format)

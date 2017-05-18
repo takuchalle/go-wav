@@ -1,4 +1,4 @@
-package waveparser
+package wav
 
 import (
 	"encoding/binary"
@@ -27,20 +27,20 @@ type WaveHeader struct {
 	SubChunk2Size uint32
 }
 
-// WaveParser is
-type WaveParser struct {
+// Wav is
+type Wav struct {
 	header WaveHeader
 	reader io.Reader
 }
 
 // New creats Wave Parser
-func New(r io.Reader) *WaveParser {
-	parser := &WaveParser{}
+func New(r io.Reader) *Wav {
+	parser := &Wav{}
 	parser.reader = r
 	return parser
 }
 
-func (parser *WaveParser) readRiffChunk(buffer []byte) ([]byte, error) {
+func (parser *Wav) readRiffChunk(buffer []byte) ([]byte, error) {
 	if "RIFF" != string(buffer[:4]) {
 		return buffer , errors.New("This is not wav file")
 	}
@@ -58,7 +58,7 @@ func (parser *WaveParser) readRiffChunk(buffer []byte) ([]byte, error) {
 	return buffer ,nil
 }
 
-func (parser *WaveParser) readFmtSubChunk(buffer []byte) ([]byte, error) {
+func (parser *Wav) readFmtSubChunk(buffer []byte) ([]byte, error) {
 	if "fmt " != string(buffer[:4]) {
 		return buffer, errors.New("This is not wav file")
 	}
@@ -89,7 +89,7 @@ func (parser *WaveParser) readFmtSubChunk(buffer []byte) ([]byte, error) {
 	return buffer, nil
 }
 
-func (parser *WaveParser) readDataSubChunk(buffer []byte) []byte {
+func (parser *Wav) readDataSubChunk(buffer []byte) []byte {
 
 	parser.header.SubChunk2ID = string(buffer[:4])
 	buffer = buffer[4:]
@@ -100,7 +100,7 @@ func (parser *WaveParser) readDataSubChunk(buffer []byte) []byte {
 	return buffer
 }
 
-func (parser *WaveParser) Parse() error {
+func (parser *Wav) Parse() error {
 	buffer := make([]byte, HeaderSize)
 	_, err := io.ReadAtLeast(parser.reader, buffer, HeaderSize)
 	if err != nil {
@@ -120,6 +120,6 @@ func (parser *WaveParser) Parse() error {
 	return nil
 }
 
-func (parser *WaveParser) GetHeader() *WaveHeader {
+func (parser *Wav) GetHeader() *WaveHeader {
 	return &parser.header
 }
