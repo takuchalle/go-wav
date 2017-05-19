@@ -25,7 +25,6 @@ func main() {
 	parser := wav.NewWav(f)
 	parser.Parse()
 	header := parser.GetHeader()
-	fmt.Printf("Format \t\t= %s\n", header.Format)
 	fmt.Printf("Sub Chunk Size \t= %d\n", header.SubChunkSize)
 	fmt.Printf("Audio Format \t= %d\n", header.AudioFormat)
 	fmt.Printf("Num Of Channels = %d\n", header.NumChannels)

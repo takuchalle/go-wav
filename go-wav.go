@@ -12,10 +12,7 @@ const HeaderSize = 44
 
 // WaveHeader is wave header
 type WaveHeader struct {
-	ChunkID       string
 	ChunkSize     uint32
-	Format        string
-	SubChunkID    string
 	SubChunkSize  uint32
 	AudioFormat   uint16
 	NumChannels   uint16
@@ -23,7 +20,6 @@ type WaveHeader struct {
 	ByteRate      uint32
 	BlockAlign    uint16
 	BitsPerSample uint16
-	SubChunk2ID   string
 	SubChunk2Size uint32
 }
 
@@ -44,7 +40,6 @@ func (parser *Wav) readRiffChunk(buffer []byte) ([]byte, error) {
 	if "RIFF" != string(buffer[:4]) {
 		return buffer, errors.New("This is not wav file")
 	}
-	parser.header.ChunkID = string(buffer[:4])
 	buffer = buffer[4:]
 
 	parser.header.ChunkSize = binary.LittleEndian.Uint32(buffer[:4])
@@ -53,7 +48,6 @@ func (parser *Wav) readRiffChunk(buffer []byte) ([]byte, error) {
 	if "WAVE" != string(buffer[:4]) {
 		log.Fatal("This is not WAVE file!\n")
 	}
-	parser.header.Format = string(buffer[:4])
 	buffer = buffer[4:]
 	return buffer, nil
 }
@@ -62,7 +56,6 @@ func (parser *Wav) readFmtSubChunk(buffer []byte) ([]byte, error) {
 	if "fmt " != string(buffer[:4]) {
 		return buffer, errors.New("This is not wav file")
 	}
-	parser.header.SubChunkID = string(buffer[:4])
 	buffer = buffer[4:]
 
 	parser.header.SubChunkSize = binary.LittleEndian.Uint32(buffer[:4])
@@ -90,8 +83,6 @@ func (parser *Wav) readFmtSubChunk(buffer []byte) ([]byte, error) {
 }
 
 func (parser *Wav) readDataSubChunk(buffer []byte) []byte {
-
-	parser.header.SubChunk2ID = string(buffer[:4])
 	buffer = buffer[4:]
 
 	parser.header.SubChunk2Size = binary.LittleEndian.Uint32(buffer[:4])
