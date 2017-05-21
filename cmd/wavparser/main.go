@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/takuyaohashi/go-wav"
 	"log"
 	"os"
+
+	"github.com/takuyaohashi/go-wav"
 )
 
 func usage() {
