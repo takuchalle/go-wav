@@ -17,10 +17,6 @@ $ go get github.com/takuyaohashi/go-wav/cmd/wavparser
 $ wavparser wavefile 
 ```
 
-# Reference
-
-[Wave File Format](http://soundfile.sapp.org/doc/WaveFormat/)
-
 # Author
 
 [takuyachallenge](https://twitter.com/takuyachallenge)
