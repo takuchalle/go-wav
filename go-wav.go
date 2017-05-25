@@ -26,11 +26,11 @@ type WaveHeader struct {
 // Wav is
 type Wav struct {
 	header WaveHeader
-	reader io.Reader
+	reader io.ReadSeeker
 }
 
 // NewWav creats Wave Parser
-func NewWav(r io.Reader) *Wav {
+func NewWav(r io.ReadSeeker) *Wav {
 	parser := &Wav{}
 	parser.reader = r
 	return parser
@@ -108,6 +108,9 @@ func (parser *Wav) Parse() error {
 	}
 	buffer = parser.readDataSubChunk(buffer)
 
+	/* Reset Read Position */
+	parser.reader.Seek(0,0)
+	
 	return nil
 }
 
