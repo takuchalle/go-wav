@@ -11,6 +11,7 @@ import (
 
 func usage() {
 	fmt.Println("Usage: go-wavexpand [wav file]")
+	os.Exit(1)
 }
 
 func expand(in <-chan []byte) <-chan []byte{
