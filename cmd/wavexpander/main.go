@@ -11,7 +11,6 @@ import (
 
 func usage() {
 	fmt.Println("Usage: go-wavexpand [wav file]")
-	os.Exit(1)
 }
 
 func expand(in <-chan []byte) <-chan []byte {
@@ -51,6 +50,7 @@ func read(reader *bufio.Reader) <-chan []byte {
 func run() int {
 	if len(os.Args) != 2 {
 		usage()
+		return 1
 	}
 
 	f, err := os.Open(os.Args[1])
