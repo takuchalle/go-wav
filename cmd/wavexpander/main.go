@@ -55,7 +55,7 @@ func run() int {
 
 	f, err := os.Open(os.Args[1])
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+		fmt.Fprintln(os.Stderr, "Failed to open file\n`")
 		return 1
 	}
 	defer f.Close()
@@ -63,14 +63,14 @@ func run() int {
 	parser := wav.NewWav(f)
 	err = parser.Parse()
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+		fmt.Fprintln(os.Stderr, "Failed to parse")
 		return 1
 	}
 	header := parser.GetHeader()
 
 	wf, err2 := os.Create("hoge.wav")
 	if err2 != nil {
-		fmt.Fprintln(os.Stderr, err)
+		fmt.Fprintln(os.Stderr, "Failed to create new file")
 		return 1
 	}
 	defer wf.Close()
