@@ -109,8 +109,8 @@ func (parser *Wav) Parse() error {
 	buffer = parser.readDataSubChunk(buffer)
 
 	/* Reset Read Position */
-	parser.reader.Seek(0,0)
-	
+	parser.reader.Seek(0, 0)
+
 	return nil
 }
 
