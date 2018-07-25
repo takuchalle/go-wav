@@ -24,7 +24,10 @@ func main() {
 	defer f.Close()
 
 	parser := wav.NewWav(f)
-	parser.Parse()
+	err = parser.Parse()
+	if err != nil {
+		log.Fatal(err)
+	}
 	header := parser.GetHeader()
 	fmt.Printf("Sub Chunk Size \t= %d\n", header.SubChunkSize)
 	fmt.Printf("Audio Format \t= %d\n", header.AudioFormat)
