@@ -9,7 +9,7 @@ import (
 )
 
 func usage() {
-	log.Fatal("Usage: go-waveparser [wave file name]")
+	log.Fatal("Usage: waveparser [wave file name]")
 }
 
 func main() {
