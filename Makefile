@@ -1,5 +1,8 @@
 
-all:
+all: build
+
+build: fmt
+	go build
 
 setup:
 	@go get github.com/golang/lint/golint
@@ -19,4 +22,4 @@ lint: setup
 fmt: setup
 	goimports -w $$(glide nv -x)   
 
-.PHONY: all
+.PHONY: all setup fmt test lint
