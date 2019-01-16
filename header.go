@@ -4,12 +4,11 @@ import (
 	"encoding/binary"
 	"errors"
 	"io"
-	"log"
 )
 
 const headerSize = 44
 
-// WaveHeader is wave header
+// WaveHeader is wave header struct
 type WaveHeader struct {
 	ChunkSize     uint32
 	SubChunkSize  uint32
@@ -24,7 +23,7 @@ type WaveHeader struct {
 
 func (parser *Wav) readRiffChunk(buffer []byte) ([]byte, error) {
 	if "RIFF" != string(buffer[:4]) {
-		return buffer, errors.New("This is not wav file")
+		return buffer, errors.New("This is not WAVE file")
 	}
 	buffer = buffer[4:]
 
@@ -32,7 +31,7 @@ func (parser *Wav) readRiffChunk(buffer []byte) ([]byte, error) {
 	buffer = buffer[4:]
 
 	if "WAVE" != string(buffer[:4]) {
-		log.Fatal("This is not WAVE file!\n")
+		return buffer, errors.New("This is not WAVE file")
 	}
 	buffer = buffer[4:]
 	return buffer, nil
