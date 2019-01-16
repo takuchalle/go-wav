@@ -17,18 +17,11 @@ func main() {
 		usage()
 	}
 
-	f, err := os.Open(os.Args[1])
+	w, err := wav.Open(os.Args[1])
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer f.Close()
-
-	parser := wav.NewWav(f)
-	err = parser.Parse()
-	if err != nil {
-		log.Fatal(err)
-	}
-	header := parser.GetHeader()
+	header := w.GetHeader()
 	fmt.Printf("Sub Chunk Size \t= %d\n", header.SubChunkSize)
 	fmt.Printf("Audio Format \t= %d\n", header.AudioFormat)
 	fmt.Printf("Num Of Channels = %d\n", header.NumChannels)
