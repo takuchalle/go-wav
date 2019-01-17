@@ -1,6 +1,7 @@
 go-wav - wav package
 ===
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+[![CircleCI](https://circleci.com/gh/takuyaohashi/go-wav.svg?style=svg)](https://circleci.com/gh/takuyaohashi/go-wav)
 
 # About
 go-wav is easy way to use wav file package for the Go programming language. 
