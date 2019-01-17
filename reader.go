@@ -99,3 +99,7 @@ func (wav *Reader) parseHeader() error {
 
 	return nil
 }
+
+func (wav *Reader) GetNumChannels() uint16 {
+	return wav.h.NumChannels
+}
