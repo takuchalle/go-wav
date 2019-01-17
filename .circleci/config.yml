@@ -16,12 +16,12 @@ jobs: # basic units of work in a run
           - v1-pkg-cache
 
     - run: go get github.com/cheekybits/is
+
+    - run: make
       
     - run:
         name: Run unit tests
         command: make test
-
-    - run: make
 
     - save_cache: # store cache in the /go/pkg directory
         key: v1-pkg-cache
