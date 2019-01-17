@@ -19,4 +19,4 @@ $ go get github.com/takuyaohashi/wav/cmd/...
 
 # Author
 
-[takuyachallenge](https://twitter.com/takuyachallenge)
+[takuchalle](https://twitter.com/takuchalle)
