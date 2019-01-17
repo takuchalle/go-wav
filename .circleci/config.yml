@@ -18,8 +18,8 @@ jobs: # basic units of work in a run
     - run: go get github.com/cheekybits/is
       
     - run:
-      name: Run unit tests
-      command: make test
+        name: Run unit tests
+        command: make test
 
     - run: make
 
