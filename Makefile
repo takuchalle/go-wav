@@ -9,7 +9,7 @@ setup:
 	@go get golang.org/x/tools/cmd/goimports
 	@go get github.com/Masterminds/glide
 
-test: setup
+test: build
 	go test $$(glide novendor)
 
 lint: setup
