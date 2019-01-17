@@ -12,8 +12,8 @@ jobs: # basic units of work in a run
     - checkout
 
     - restore_cache: # restores saved cache if no changes are detected since last run
-      keys:
-        - v1-pkg-cache
+        keys:
+          - v1-pkg-cache
 
     - run: go get github.com/cheekybits/is
       
