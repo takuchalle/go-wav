@@ -24,7 +24,7 @@ func NewReader(r io.ReadSeeker) (wav *Reader, err error) {
 
 func (wav *Reader) readRiffChunk(buffer []byte) ([]byte, error) {
 	if "RIFF" != string(buffer[:4]) {
-		return buffer, ErrNotWavFile
+		return buffer, ErrNoRIFF
 	}
 	buffer = buffer[4:]
 
@@ -40,7 +40,7 @@ func (wav *Reader) readRiffChunk(buffer []byte) ([]byte, error) {
 
 func (wav *Reader) readFmtSubChunk(buffer []byte) ([]byte, error) {
 	if "fmt " != string(buffer[:4]) {
-		return buffer, ErrNotWavFile
+		return buffer, ErrNoFmt
 	}
 	buffer = buffer[4:]
 
