@@ -53,5 +53,5 @@ func TestParseHeaders_brokenRiff(t *testing.T) {
 	fmt.Printf("%v\n", b.Len())
 	_, err := NewReader(wavFile)
 	is.Err(err)
-	is.Equal(err, ErrNotWavFile)
+	is.Equal(err, ErrNoRIFF)
 }
