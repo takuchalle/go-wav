@@ -28,5 +28,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("Num of channles is %v\n", w.GetNumChannels())
+	fmt.Printf("Chunk Size:\t%v\n", w.GetChunkSize())
+	fmt.Printf("SubChunk Size:\t%v\n", w.GetSubChunkSize())
+	fmt.Printf("Audio Format:\t%v\n", w.GetAudioFormat())
+	fmt.Printf("Channles:\t%v\n", w.GetNumChannels())
 }

@@ -103,3 +103,36 @@ func (wav *Reader) parseHeader() error {
 func (wav *Reader) GetNumChannels() uint16 {
 	return wav.h.NumChannels
 }
+
+func (wav *Reader) GetChunkSize() uint32 {
+	return wav.h.ChunkSize
+}
+
+func (wav *Reader) GetSubChunkSize() uint32 {
+	return wav.h.SubChunkSize
+}
+
+func (wav *Reader) GetAudioFormat() uint16 {
+	return wav.h.AudioFormat
+}
+
+func (wav *Reader) GetSampleRate() uint32 {
+	return wav.h.SampleRate
+}
+
+func (wav *Reader) GetByteRate() uint32 {
+	return wav.h.ByteRate
+}
+
+func (wav *Reader) GetBlockAlign() uint32 {
+	return wav.h.BlockAlign
+}
+
+func (wav *Reader) GetBitsPerSample() uint32 {
+	return wav.h.BitsPerSample
+}
+
+func (wav *Reader) GetSubChunkSize() uint32 {
+	return wav.h.SubChunk2Size
+}
+
