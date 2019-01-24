@@ -1,7 +1,7 @@
 
 all: build
 
-build: fmt
+build: dep fmt
 	go build
 
 setup:
@@ -9,17 +9,20 @@ setup:
 	@go get golang.org/x/tools/cmd/goimports
 	@go get github.com/Masterminds/glide
 
+dep:
+	@dep ensure
+
 test: build
 	go test $$(glide novendor)
 
-lint: setup
+lint:
 	go vet $$(glide novendor)
 	for pkg in $$(glide novendor -x); do \
 		golint -set_exit_status $$pkg || exit $$?; \
 	done
 
 
-fmt: setup
+fmt:
 	goimports -w $$(glide nv -x)   
 
-.PHONY: all setup fmt test lint
+.PHONY: all setup fmt test lint dep
