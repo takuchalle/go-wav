@@ -108,10 +108,6 @@ func (wav *Reader) GetChunkSize() uint32 {
 	return wav.h.ChunkSize
 }
 
-func (wav *Reader) GetSubChunkSize() uint32 {
-	return wav.h.SubChunkSize
-}
-
 func (wav *Reader) GetAudioFormat() uint16 {
 	return wav.h.AudioFormat
 }
@@ -124,11 +120,11 @@ func (wav *Reader) GetByteRate() uint32 {
 	return wav.h.ByteRate
 }
 
-func (wav *Reader) GetBlockAlign() uint32 {
+func (wav *Reader) GetBlockAlign() uint16 {
 	return wav.h.BlockAlign
 }
 
-func (wav *Reader) GetBitsPerSample() uint32 {
+func (wav *Reader) GetBitsPerSample() uint16 {
 	return wav.h.BitsPerSample
 }
 
