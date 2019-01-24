@@ -15,9 +15,17 @@ jobs: # basic units of work in a run
         keys:
           - v1-pkg-cache
 
-    - run: go get github.com/cheekybits/is
+    - run:
+        name: Setup
+        command: make setup
 
-    - run: make
+    - run:
+        name: Install depend packages
+        command: make dep
+
+    - run:
+        name: Build
+        command: make build
       
     - run:
         name: Run unit tests
