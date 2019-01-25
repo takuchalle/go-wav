@@ -5,12 +5,15 @@ import (
 	"io"
 )
 
+// Reader is wav reader struct
 type Reader struct {
 	r io.ReadSeeker
 
 	h WaveHeader
 }
 
+// NewReader creates new Reader struct.
+// Check wav header.
 func NewReader(r io.ReadSeeker) (wav *Reader, err error) {
 	wav = &Reader{}
 	wav.r = r
@@ -100,35 +103,42 @@ func (wav *Reader) parseHeader() error {
 	return nil
 }
 
+// GetNumChannels returns num of channels
 func (wav *Reader) GetNumChannels() uint16 {
 	return wav.h.NumChannels
 }
 
+// GetChunkSize returns chunk size
 func (wav *Reader) GetChunkSize() uint32 {
 	return wav.h.ChunkSize
 }
 
+// GetAudioFormat returns audio format
 func (wav *Reader) GetAudioFormat() uint16 {
 	return wav.h.AudioFormat
 }
 
+// GetSampleRate returns sample rate
 func (wav *Reader) GetSampleRate() uint32 {
 	return wav.h.SampleRate
 }
 
+// GetByteRate returns byte rate
 func (wav *Reader) GetByteRate() uint32 {
 	return wav.h.ByteRate
 }
 
+// GetBlockAlign returns block align
 func (wav *Reader) GetBlockAlign() uint16 {
 	return wav.h.BlockAlign
 }
 
+// GetBitsPerSample returns bits per sample
 func (wav *Reader) GetBitsPerSample() uint16 {
 	return wav.h.BitsPerSample
 }
 
+// GetSubChunkSize returns sub chunk size
 func (wav *Reader) GetSubChunkSize() uint32 {
 	return wav.h.SubChunk2Size
 }
-
