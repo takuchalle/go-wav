@@ -1,10 +1,10 @@
 
 all: build
 
-build: dep fmt
+build: fmt
 	go build
 
-setup:
+setup: dep
 	@go get github.com/golang/lint/golint
 	@go get golang.org/x/tools/cmd/goimports
 	@go get github.com/Masterminds/glide
