@@ -2,7 +2,6 @@ package wav
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"testing"
 
@@ -44,14 +43,45 @@ func TestParseHeaders_brokenRiff(t *testing.T) {
 	is := is.New(t)
 
 	var b bytes.Buffer
-	b.Write([]byte{0x52, 0x48, 0x46, 0x46})
+	b.Write([]byte{0x52, 0x48, 0x46, 0x46}) // broken riff
 	b.Write([]byte{0x26, 0x00, 0x00, 0x00}) // chunkSize
 	b.Write(wave)
 	b.Write(fmt20)
 	b.Write(testRiffChunkFmt)
 	wavFile := bytes.NewReader(b.Bytes())
-	fmt.Printf("%v\n", b.Len())
 	_, err := NewReader(wavFile)
 	is.Err(err)
 	is.Equal(err, ErrNoRIFF)
+}
+
+func TestParseHeaders_brokenFmt(t *testing.T) {
+	t.Parallel()
+	is := is.New(t)
+
+	var b bytes.Buffer
+	b.Write(riff)
+	b.Write([]byte{0x26, 0x00, 0x00, 0x00}) // chunkSize
+	b.Write(wave)
+	b.Write([]byte{0x66, 0x6d, 0x75, 0x20}) // broken fmt
+	b.Write(testRiffChunkFmt)
+	wavFile := bytes.NewReader(b.Bytes())
+	_, err := NewReader(wavFile)
+	is.Err(err)
+	is.Equal(err, ErrNoFmt)
+}
+
+func TestParseHeaders_brokenWave(t *testing.T) {
+	t.Parallel()
+	is := is.New(t)
+
+	var b bytes.Buffer
+	b.Write(riff)
+	b.Write([]byte{0x26, 0x00, 0x00, 0x00}) // chunkSize
+	b.Write([]byte{0x57, 0x40, 0x56, 0x45}) // broken Wave
+	b.Write(fmt20)
+	b.Write(testRiffChunkFmt)
+	wavFile := bytes.NewReader(b.Bytes())
+	_, err := NewReader(wavFile)
+	is.Err(err)
+	is.Equal(err, ErrNotWavFile)
 }
