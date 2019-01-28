@@ -5,14 +5,14 @@ const (
 )
 
 // WaveHeader is wave header struct
-type WaveHeader struct {
-	ChunkSize     uint32
-	SubChunkSize  uint32
-	AudioFormat   uint16
-	NumChannels   uint16
-	SampleRate    uint32
-	ByteRate      uint32
-	BlockAlign    uint16
-	BitsPerSample uint16
-	SubChunk2Size uint32
+type waveHeader struct {
+	chunkSize     uint32
+	subChunkSize  uint32
+	audioFormat   uint16
+	numChannels   uint16
+	sampleRate    uint32
+	byteRate      uint32
+	blockAlign    uint16
+	bitsPerSample uint16
+	subChunk2Size uint32
 }
