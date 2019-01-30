@@ -4,6 +4,24 @@ const (
 	headerSize = 44
 )
 
+type AudioFormat int
+
+const (
+	AudioFormatPCM AudioFormat = iota
+	AudioFormatBitstream
+)
+
+func (af AudioFormat) String() string {
+	switch af {
+	case AudioFormatPCM:
+		return "PCM"
+	case AudioFormatBitstream:
+		return "BitStream"
+	default:
+		return "Error"
+	}
+}
+
 // WaveHeader is wave header struct
 type waveHeader struct {
 	chunkSize     uint32

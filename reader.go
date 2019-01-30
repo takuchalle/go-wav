@@ -114,8 +114,12 @@ func (wav *Reader) GetChunkSize() uint32 {
 }
 
 // GetAudioFormat returns audio format
-func (wav *Reader) GetAudioFormat() uint16 {
-	return wav.h.audioFormat
+func (wav *Reader) GetAudioFormat() AudioFormat {
+	if wav.h.audioFormat == 1 {
+		return AudioFormatPCM
+	} else {
+		return AudioFormatBitstream
+	}
 }
 
 // GetSampleRate returns sample rate
