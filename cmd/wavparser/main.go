@@ -30,6 +30,6 @@ func main() {
 
 	fmt.Printf("Chunk Size:\t%v\n", w.GetChunkSize())
 	fmt.Printf("SubChunk Size:\t%v\n", w.GetSubChunkSize())
-	fmt.Printf("Audio Format:\t%v\n", w.GetAudioFormat().String())
+	fmt.Printf("Audio Format:\t%v\n", w.GetAudioFormat())
 	fmt.Printf("Channles:\t%v\n", w.GetNumChannels())
 }
