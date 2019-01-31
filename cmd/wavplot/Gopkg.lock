@@ -3,13 +3,104 @@
 
 [[projects]]
   branch = "master"
-  name = "github.com/takuyaohashi/go-wav"
+  name = "github.com/ajstarks/svgo"
   packages = ["."]
-  revision = "43dbf46fba81fc422406da812968bde69b04a53f"
+  revision = "6ce6a3bcf6cde6c5007887677ebd148ec30f42a4"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/golang/freetype"
+  packages = [
+    ".",
+    "raster",
+    "truetype"
+  ]
+  revision = "e2365dfdc4a05e4b8299a783240d4a7d5a65d4e4"
+
+[[projects]]
+  name = "github.com/jung-kurt/gofpdf"
+  packages = ["."]
+  revision = "14c1db30737a138f8d9797cffea58783892b2fae"
+  version = "v1.0.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/llgcode/draw2d"
+  packages = [
+    ".",
+    "draw2dbase",
+    "draw2dimg"
+  ]
+  revision = "f52c8a71aff06ab8df41843d33ab167b36c971cd"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/takuyaohashi/go-wav"
+  packages = [
+    ".",
+    "wavplotter"
+  ]
+  revision = "6e7511ca3cd8ab66f0628542aca9a2d5da3f5676"
+
+[[projects]]
+  name = "github.com/urfave/cli"
+  packages = ["."]
+  revision = "cfb38830724cc34fedffe9a2a29fb54fa9169cd1"
+  version = "v1.20.0"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/image"
+  packages = [
+    "draw",
+    "font",
+    "math/f64",
+    "math/fixed",
+    "tiff",
+    "tiff/lzw"
+  ]
+  revision = "183bebdce1b249c42a7cf6772817e8c2e873b966"
+
+[[projects]]
+  branch = "master"
+  name = "gonum.org/v1/gonum"
+  packages = [
+    "blas",
+    "blas/blas64",
+    "blas/gonum",
+    "floats",
+    "internal/asm/c128",
+    "internal/asm/f32",
+    "internal/asm/f64",
+    "internal/math32",
+    "lapack",
+    "lapack/gonum",
+    "lapack/lapack64",
+    "mat"
+  ]
+  revision = "dca16df66688a34759287a9b61d6a074161f711e"
+
+[[projects]]
+  branch = "master"
+  name = "gonum.org/v1/plot"
+  packages = [
+    ".",
+    "palette",
+    "plotter",
+    "tools/bezier",
+    "vg",
+    "vg/draw",
+    "vg/fonts",
+    "vg/vgeps",
+    "vg/vgimg",
+    "vg/vgpdf",
+    "vg/vgsvg"
+  ]
+  revision = "f7ffe56ce5595f83744faf1a7d6ac9f8c52ace4c"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "0bb2df96c1be31bd1290ffcd314cb5b0ae5ae4f1bba9dead9ed25d29a83c510b"
+  inputs-digest = "edcdc4117713bab096fc1de3b759acb853d340cab6600c714d66cfac1f8c225c"
   solver-name = "gps-cdcl"
   solver-version = 1
