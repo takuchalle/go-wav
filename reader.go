@@ -97,10 +97,24 @@ func (wav *Reader) parseHeader() error {
 	}
 	buffer = wav.readDataSubChunk(buffer)
 
-	/* Reset Read Position */
-	wav.r.Seek(0, 0)
-
 	return nil
+}
+
+func (wav *Reader) ReadSamples(n int) (interface{}, error) {
+	var data interface{}
+	switch wav.GetAudioFormat() {
+	case AudioFormatPCM:
+		data = make([]int16, n)
+	case AudioFormatBitstream:
+	default:
+		return nil, ErrInvalidFmt
+	}
+	err := binary.Read(wav.r, binary.LittleEndian, data)
+	if err != nil {
+		return nil, err
+	}
+
+	return data, nil
 }
 
 // GetNumChannels returns num of channels
