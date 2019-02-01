@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"os"
 
 	"github.com/takuyaohashi/go-wav"
@@ -10,8 +10,15 @@ import (
 	"github.com/urfave/cli"
 )
 
-func usage() {
-	log.Fatal("Usage: wavplot [wave file name]")
+// getFileName ...
+func getFileName(givenName string, w *wav.Reader) string {
+	if givenName == "wave.png" {
+		return fmt.Sprintf("%dch_%dhz_wav.png",
+			w.GetNumChannels(),
+			w.GetSampleRate())
+	} else {
+		return givenName
+	}
 }
 
 // plot ...
@@ -19,7 +26,7 @@ func plot(c *cli.Context) error {
 	if c.Args().Get(0) == "" {
 		return cli.NewExitError("Need input file", 1)
 	}
-	
+
 	f, err := os.Open(c.Args().Get(0))
 	if err != nil {
 		return cli.NewExitError("No such file", 2)
@@ -32,7 +39,10 @@ func plot(c *cli.Context) error {
 	}
 
 	plotter := wavplotter.NewPlotter(w)
-	plotter.Plot()
+
+	filename := getFileName(c.String("output"), w)
+
+	plotter.Output(filename)
 
 	return nil
 }

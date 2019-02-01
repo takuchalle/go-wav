@@ -21,12 +21,8 @@ func NewPlotter(wav *wav.Reader) (plotter *WavPlotter) {
 	return plotter
 }
 
-func (wp *WavPlotter) getFileName() (name string) {
-	return fmt.Sprintf("%dch_wav.png", wp.w.GetNumChannels())
-}
-
 func (wp *WavPlotter) getTitleText() (name string) {
-	return fmt.Sprintf("%dch \n", wp.w.GetNumChannels())
+	return fmt.Sprintf("%dch\n%dHz", wp.w.GetNumChannels(), wp.w.GetSampleRate())
 }
 
 // pontSamples  ...
@@ -39,16 +35,13 @@ func (wp *WavPlotter) pointSamples(samples []int16) plotter.XYs {
 	return pts
 }
 
-func (wp *WavPlotter) Plot() {
+func (wp *WavPlotter) Output(filename string) {
 	p, err := plot.New()
 	if err != nil {
 		panic(err)
 	}
 	//label
 	p.Title.Text = wp.getTitleText()
-
-	// 補助線
-	p.Add(plotter.NewGrid())
 
 	// 座標範囲
 	p.X.Min = 0
@@ -72,13 +65,9 @@ func (wp *WavPlotter) Plot() {
 		panic(err)
 	}
 
-	//plot1,plot2をplot
 	p.Add(plot1)
 
-	// plot.pngに保存
-	if err := p.Save(4*vg.Inch, 4*vg.Inch, wp.getFileName()); err != nil {
+	if err := p.Save(8*vg.Inch, 6*vg.Inch, filename); err != nil {
 		panic(err)
 	}
-
-	fmt.Printf("Saved %s\n", wp.getFileName())
 }
