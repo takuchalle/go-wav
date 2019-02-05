@@ -8,29 +8,21 @@ import (
 )
 
 type WriterParam struct {
-	sampleRate    uint32
-	bitsPerSample uint16
-	numChannels   uint16
-	audioFormat   AudioFormat
+	SampleRate    uint32
+	BitsPerSample uint16
+	NumChannels   uint16
+	AudioFormat   AudioFormat
 }
 
 type Writer struct {
 	r io.Writer
+
+	p WriterParam
 }
 
 func NewWriter(r io.Writer, p WriterParam) (w *Writer, err error) {
-	w = &Writer{}
-	w.r = r
-	w.setDefaultFormat()
+	w = &Writer{r: r, p: p}
 	return w, nil
-}
-
-func (w *Writer) setDefaultFormat() {
-	w.SetFormat(WriterParam{sampleRate: 1, bitsPerSample: 1, numChannels: 1, audioFormat: AudioFormatPCM})
-}
-
-func (w *Writer) SetFormat(param WriterParam) {
-
 }
 
 func (w *Writer) writeHeader() {
