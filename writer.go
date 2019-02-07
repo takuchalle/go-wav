@@ -30,6 +30,10 @@ func NewWriter(r io.WriteSeeker, p WriterParam) (w *Writer, err error) {
 	return w, nil
 }
 
+func (w *Writer) Close() {
+
+}
+
 func (w *Writer) writeRiffChunk(buf *bytes.Buffer) error {
 	header := fmt.Sprintf("RIFF")
 	err := binary.Write(buf, binary.LittleEndian, []byte(header))
