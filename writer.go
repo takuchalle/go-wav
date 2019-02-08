@@ -17,7 +17,8 @@ type WriterParam struct {
 type Writer struct {
 	r io.WriteSeeker
 
-	p WriterParam
+	p        WriterParam
+	dataSize int
 }
 
 func NewWriter(r io.WriteSeeker, p WriterParam) (w *Writer, err error) {
@@ -27,11 +28,34 @@ func NewWriter(r io.WriteSeeker, p WriterParam) (w *Writer, err error) {
 
 	w = &Writer{r: r, p: p}
 	w.writeHeader()
+	w.dataSize = 0
 	return w, nil
 }
 
 func (w *Writer) Close() {
+	buf := new(bytes.Buffer)
+	u, err := w.r.Seek(4, 0)
+	if err != nil {
+		fmt.Printf("error: %v\n", u)
+	}
 
+	err = binary.Write(buf, binary.LittleEndian, int32(w.dataSize+32))
+	if err != nil {
+
+	}
+	w.r.Write(buf.Bytes())
+
+	u, err = w.r.Seek(40, 0)
+	if err != nil {
+		fmt.Printf("error: %v\n", u)
+	}
+
+	buf.Reset()
+	err = binary.Write(buf, binary.LittleEndian, int32(w.dataSize))
+	if err != nil {
+
+	}
+	w.r.Write(buf.Bytes())
 }
 
 func (w *Writer) writeRiffChunk(buf *bytes.Buffer) error {
@@ -64,7 +88,7 @@ func (w *Writer) writeFmtSubChunk(buf *bytes.Buffer) error {
 	}
 
 	// SubChunk1Size
-	err = binary.Write(buf, binary.LittleEndian, int32(00000))
+	err = binary.Write(buf, binary.LittleEndian, int32(16))
 	if err != nil {
 		return ErrFailedWrite
 	}
@@ -115,7 +139,7 @@ func (w *Writer) writeFmtSubChunk(buf *bytes.Buffer) error {
 	}
 
 	// SubChunk2Size
-	err = binary.Write(buf, binary.LittleEndian, int32(4))
+	err = binary.Write(buf, binary.LittleEndian, int32(256*2))
 	if err != nil {
 		return ErrFailedWrite
 	}
@@ -139,6 +163,14 @@ func (w *Writer) writeHeader() {
 	w.r.Write(buf.Bytes())
 }
 
-func (w *Writer) WriteSamples() {
+func (w *Writer) WriteSamples(samples []int16) {
+	buf := new(bytes.Buffer)
 
+	err := binary.Write(buf, binary.LittleEndian, (samples))
+	if err != nil {
+		fmt.Println("binary.Write failed:", err)
+	}
+
+	w.dataSize += len(buf.Bytes())
+	w.r.Write(buf.Bytes())
 }

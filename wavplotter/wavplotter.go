@@ -48,7 +48,7 @@ func (wp *WavPlotter) Output(filename string) {
 	p.Y.Min = -1
 	p.Y.Max = 1
 
-	data, err := wp.w.ReadSamples(1024)
+	data, err := wp.w.ReadSamples(256 * 50)
 	if err != nil {
 		panic(err)
 	}
