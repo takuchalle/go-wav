@@ -15,7 +15,14 @@ func generate_sin(c *cli.Context, w *wav.Writer) error {
 	for i := 0; i < int(length); i += 256 {
 		samples := make([]int16, 256)
 		for j := 0; j < 256; j++ {
-			samples[j] = int16(math.Sin(math.Pi*2.0*float64(i+j)/(c.Float64("f"))) * float64(math.MaxInt16))
+			data := c.Float64("amp") * math.Sin(math.Pi*2.0*float64(i+j)*(c.Float64("f"))/c.Float64("rate"))
+			if data > 1.0 {
+				data = 1.0
+			}
+			if data < -1.0 {
+				data = -1.0
+			}
+			samples[j] = int16(data * float64(math.MaxInt16))
 		}
 		w.WriteSamples(samples)
 	}
@@ -60,6 +67,12 @@ func main() {
 			Name:  "sec, s",
 			Value: 5.0,
 			Usage: "output sample length",
+		},
+
+		cli.Float64Flag{
+			Name:  "amp, a",
+			Value: 1.0,
+			Usage: "amplitude",
 		},
 
 		cli.IntFlag{
