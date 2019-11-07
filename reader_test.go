@@ -33,7 +33,8 @@ func TestParseHeaders_tooShort(t *testing.T) {
 	var b bytes.Buffer
 	b.Write(riff)
 	wavFile := bytes.NewReader(b.Bytes())
-	_, err := NewReader(wavFile)
+	r := NewReader(wavFile)
+	err := r.Parse()
 	is.Err(err)
 	is.Equal(err, io.ErrUnexpectedEOF)
 }
@@ -49,7 +50,8 @@ func TestParseHeaders_brokenRiff(t *testing.T) {
 	b.Write(fmt20)
 	b.Write(testRiffChunkFmt)
 	wavFile := bytes.NewReader(b.Bytes())
-	_, err := NewReader(wavFile)
+	r := NewReader(wavFile)
+	err := r.Parse()
 	is.Err(err)
 	is.Equal(err, ErrNoRIFF)
 }
@@ -65,7 +67,8 @@ func TestParseHeaders_brokenFmt(t *testing.T) {
 	b.Write([]byte{0x66, 0x6d, 0x75, 0x20}) // broken fmt
 	b.Write(testRiffChunkFmt)
 	wavFile := bytes.NewReader(b.Bytes())
-	_, err := NewReader(wavFile)
+	r := NewReader(wavFile)
+	err := r.Parse()
 	is.Err(err)
 	is.Equal(err, ErrNoFmt)
 }
@@ -81,7 +84,8 @@ func TestParseHeaders_brokenWave(t *testing.T) {
 	b.Write(fmt20)
 	b.Write(testRiffChunkFmt)
 	wavFile := bytes.NewReader(b.Bytes())
-	_, err := NewReader(wavFile)
+	r := NewReader(wavFile)
+	err := r.Parse()
 	is.Err(err)
 	is.Equal(err, ErrNotWavFile)
 }

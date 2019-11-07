@@ -14,15 +14,16 @@ type Reader struct {
 
 // NewReader creates new Reader struct.
 // Check wav header.
-func NewReader(r io.ReadSeeker) (wav *Reader, err error) {
+func NewReader(r io.ReadSeeker) (wav *Reader) {
 	wav = &Reader{}
 	wav.r = r
-	err = wav.parseHeader()
-	if err != nil {
-		return nil, err
-	}
+	return wav
+}
 
-	return wav, nil
+// Parse wav header
+func (wav *Reader) Parse() (err error) {
+	err = wav.parseHeader()
+	return err
 }
 
 func (wav *Reader) readRiffChunk(buffer []byte) ([]byte, error) {
@@ -131,9 +132,8 @@ func (wav *Reader) GetChunkSize() uint32 {
 func (wav *Reader) GetAudioFormat() AudioFormat {
 	if wav.h.audioFormat == 1 {
 		return AudioFormatPCM
-	} else {
-		return AudioFormatBitstream
 	}
+	return AudioFormatBitstream
 }
 
 // GetSampleRate returns sample rate
