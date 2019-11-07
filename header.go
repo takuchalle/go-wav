@@ -4,13 +4,18 @@ const (
 	headerSize = 44
 )
 
+// AudioFormat describes audio format
 type AudioFormat int
 
 const (
+	// AudioFormatPCM describes wav file format is pcm.
 	AudioFormatPCM AudioFormat = iota
+
+	// AudioFormatBitstream describes wav file format is bitstream.
 	AudioFormatBitstream
 )
 
+// String shows audio format
 func (af AudioFormat) String() string {
 	switch af {
 	case AudioFormatPCM:
