@@ -28,6 +28,8 @@ func main() {
 		log.Fatal(err)
 	}
 
+	w.Parse()
+
 	fmt.Printf("Chunk Size:\t%v\n", w.GetChunkSize())
 	fmt.Printf("SubChunk Size:\t%v\n", w.GetSubChunkSize())
 	fmt.Printf("Audio Format:\t%v\n", w.GetAudioFormat())
