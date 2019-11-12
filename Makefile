@@ -1,17 +1,10 @@
 
 all: build
 
-build: dep
+build:
 	go build
-
-setup:
-	@go get golang.org/x/lint/golint
-	@go get golang.org/x/tools/cmd/goimports
-
-dep:
-	@dep ensure
 
 test: build
 	go test
 
-.PHONY: all setup dep
+.PHONY: all build test
