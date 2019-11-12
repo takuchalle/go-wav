@@ -16,14 +16,6 @@ jobs: # basic units of work in a run
           - v1-pkg-cache
 
     - run:
-        name: Setup
-        command: make setup
-
-    - run:
-        name: Install depend packages
-        command: make dep
-
-    - run:
         name: Build
         command: make build
       
