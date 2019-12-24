@@ -11,7 +11,7 @@ go-wav is easy way to use wav file package for the Go programming language.
 
 ## How to install
 ```bash
-$ go get github.com/takuyaohashi/wav/cmd/...
+$ go get github.com/takuyaohashi/go-wav/cmd/...
 ```
 
 # Reference
