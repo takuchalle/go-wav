@@ -23,10 +23,7 @@ func main() {
 	}
 	defer f.Close()
 
-	w, err := wav.NewReader(f)
-	if err != nil {
-		log.Fatal(err)
-	}
+	w := wav.NewReader(f)
 
 	w.Parse()
 
