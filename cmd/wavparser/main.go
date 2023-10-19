@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/takuyaohashi/go-wav"
+	"github.com/takuchalle/go-wav"
 )
 
 func usage() {

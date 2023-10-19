@@ -1,9 +1,10 @@
-module github.com/takuyaohashi/go-wav
+module github.com/takuchalle/go-wav
 
 go 1.13
 
 require (
 	github.com/cheekybits/is v0.0.0-20150225183255-68e9c0620927
-	github.com/mjibson/go-dsp v0.0.0-20180508042940-11479a337f12
+	github.com/takuyaohashi/go-wav v0.0.0-20191224082800-cca6cf115eaa
 	github.com/urfave/cli v1.22.1
+	gonum.org/v1/plot v0.14.0
 )
